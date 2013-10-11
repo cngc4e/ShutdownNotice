@@ -1,0 +1,18 @@
+name: ${project.name}
+main: ${main.class}
+version: ${project.version}
+author: BillyGalbreath
+description: Notify online players before a server shutdown.
+commands:
+    shutdown:
+        description: Shutdown the server after a delay.
+        usage: /<command> [delay] (estimated downtime)
+        aliases: [stop, restart, reboot]
+permissions:
+    shutdownnotice.*:
+        description: Gives every permission.
+        default: false
+        children:
+            shutdownnotice.command.shutdown:
+                description: Allow player to use /shutdown command
+                default: op
