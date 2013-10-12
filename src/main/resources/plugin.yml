@@ -6,7 +6,7 @@ description: Notify online players before a server shutdown.
 commands:
     shutdown:
         description: Shutdown the server after a delay.
-        usage: /<command> [delay] (estimated downtime)
+        usage: /<command> [delay | cancel]
         aliases: [stop, restart, reboot]
 permissions:
     shutdownnotice.*:
