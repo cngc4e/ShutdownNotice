@@ -80,9 +80,9 @@ public class ShutdownNotice extends JavaPlugin {
 		String msg = "";
 		if (hours > 0)
 			msg += hours + " hours";
-		else if (minutes > 0)
+		if (minutes > 0)
 			msg += ((msg == "") ? "" : ", ") + minutes + " minutes";
-		else if (seconds > 0)
+		if (seconds > 0)
 			msg += ((msg == "") ? "" : ", ") + seconds + " seconds";
 		return msg;
 	}

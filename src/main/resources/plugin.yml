@@ -7,7 +7,7 @@ commands:
     shutdown:
         description: Shutdown the server after a delay.
         usage: /<command> [delay | cancel]
-        aliases: [stop, restart, reboot]
+        aliases: [restart, reboot]
 permissions:
     shutdownnotice.*:
         description: Gives every permission.
