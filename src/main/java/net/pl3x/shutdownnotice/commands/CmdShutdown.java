@@ -34,7 +34,7 @@ public class CmdShutdown implements CommandExecutor {
 			}
 			plugin.setTimeLeft(null);
 			String defaultMsg = "&1[&4ATTENTION&1] &eThe &4{shutdowntype} &ehas been cancelled!";
-			String message = plugin.getConfig().getString("broadcast-message", defaultMsg);
+			String message = plugin.getConfig().getString("cancel-message", defaultMsg);
 			message = plugin.formatMessage(message, 0, plugin.getShutdownType());
 			Bukkit.getServer().broadcastMessage(plugin.colorize(message));
 			return true;

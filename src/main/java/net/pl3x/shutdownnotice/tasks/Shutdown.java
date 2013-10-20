@@ -14,7 +14,7 @@ public class Shutdown  implements Runnable {
 	@Override
 	public void run() {
 		String defaultMsg = "&1[&4ATTENTION&1] &eThe server will &4{shutdowntype} &ein &7{timeleft}&e!";
-		String message = plugin.getConfig().getString("broadcast-message", defaultMsg);
+		String message = plugin.getConfig().getString("shutdown-message", defaultMsg);
 		message = plugin.formatMessage(message, 0, plugin.getShutdownType());
 		Bukkit.getServer().broadcastMessage(plugin.colorize(message));
 		for (String command : plugin.getConfig().getStringList("shutdown-commands")) {
