@@ -14,10 +14,13 @@ import org.mcstats.Metrics;
 public class ShutdownNotice extends JavaPlugin {
 	private Integer timeLeft;
 	private ShutdownType shutdownType;
+	private String reason;
 	
 	public void onEnable() {
 		if (!new File(getDataFolder() + File.separator + "config.yml").exists())
 			saveDefaultConfig();
+		
+		setReason(null);
 		
 		getCommand("shutdown").setExecutor(new CmdShutdown(this));
 		
@@ -65,9 +68,22 @@ public class ShutdownNotice extends JavaPlugin {
 		shutdownType = type;
 	}
 	
+	public String getReason() {
+		return reason;
+	}
+	
+	public void setReason(String string) {
+		if (string == null || string == "") {
+			reason = getConfig().getString("default-reason", "scheduled maintenance");
+			return;
+		}
+		reason = string;
+	}
+	
 	public String formatMessage(String message, int timeLeft, ShutdownType shutdownType) {
-		message = message.replaceAll("(?i)\\{timeleft\\}", formatTime(timeLeft));
-		message = message.replaceAll("(?i)\\{shutdowntype\\}", shutdownType.getName());
+		message = message.replaceAll("(?i)\\{timeleft\\}", formatTime(getTimeLeft()));
+		message = message.replaceAll("(?i)\\{shutdowntype\\}", getShutdownType().getName());
+		message = message.replaceAll("(?i)\\{reason\\}", getReason());
 		return message;
 	}
 	
@@ -79,11 +95,11 @@ public class ShutdownNotice extends JavaPlugin {
 		seconds = seconds - (hours * 60 * 60) - (minutes * 60);
 		String msg = "";
 		if (hours > 0)
-			msg += hours + " hours";
+			msg += hours + " hour" + ((hours == 1) ? "" : "s");
 		if (minutes > 0)
-			msg += ((msg == "") ? "" : ", ") + minutes + " minutes";
+			msg += ((msg == "") ? "" : ", ") + minutes + " minute" + ((minutes == 1) ? "" : "s");
 		if (seconds > 0)
-			msg += ((msg == "") ? "" : ", ") + seconds + " seconds";
+			msg += ((msg == "") ? "" : ", ") + seconds + " second" + ((seconds == 1) ? "" : "s");
 		return msg;
 	}
 }

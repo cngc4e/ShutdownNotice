@@ -5,7 +5,10 @@ debug-mode: false
 color-logs: true
 
 # Shutdown message format
-shutdown-message: "&1[&4ATTENTION&1] &eThe server will &4{shutdowntype} &ein &7{timeleft}&e!"
+shutdown-message: "&1[&4ATTENTION&1] &eThe server will &4{shutdowntype} &ein &7{timeleft}&e for {reason}!"
+
+# Default reason if none specified in command
+default-reason: "scheduled maintenance"
 
 # Cancel message format
 cancel-message: "&1[&4ATTENTION&1] &eThe &4{shutdowntype} &ehas been cancelled!"

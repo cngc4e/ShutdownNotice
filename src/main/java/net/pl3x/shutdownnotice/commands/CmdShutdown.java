@@ -15,6 +15,17 @@ public class CmdShutdown implements CommandExecutor {
 		this.plugin = plugin;
 	}
 	
+	private String getFinalArg(final String[] args, final int start) {
+		final StringBuilder bldr = new StringBuilder();
+		for (int i = start; i < args.length; i++) {
+			if (i != start) {
+				bldr.append(" ");
+			}
+			bldr.append(args[i]);
+		}
+		return bldr.toString();
+	}
+	
 	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
 		if (!cmd.getName().equalsIgnoreCase("shutdown"))
 			return false;
@@ -47,9 +58,11 @@ public class CmdShutdown implements CommandExecutor {
 		try {
 			delay = Integer.valueOf(args[0]);
 		} catch (NumberFormatException e) {
-			cs.sendMessage(plugin.colorize("&4Unknown subcommand!"));
+			cs.sendMessage(plugin.colorize("&4Delay must be a number!"));
 			return true;
 		}
+		if (args.length > 1)
+			plugin.setReason(getFinalArg(args, 1));
 		ShutdownType shutdownType = ShutdownType.SHUTDOWN;
 		if (label.equalsIgnoreCase("RESTART"))
 			shutdownType = ShutdownType.RESTART;
