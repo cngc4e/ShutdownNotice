@@ -81,8 +81,8 @@ public class ShutdownNotice extends JavaPlugin {
 	}
 	
 	public String formatMessage(String message, int timeLeft, ShutdownType shutdownType) {
-		message = message.replaceAll("(?i)\\{timeleft\\}", formatTime(getTimeLeft()));
-		message = message.replaceAll("(?i)\\{shutdowntype\\}", getShutdownType().getName());
+		message = message.replaceAll("(?i)\\{timeleft\\}", formatTime(timeLeft));
+		message = message.replaceAll("(?i)\\{shutdowntype\\}", shutdownType.getName());
 		message = message.replaceAll("(?i)\\{reason\\}", getReason());
 		return message;
 	}
