@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class CmdShutdown implements CommandExecutor {
 	private ShutdownNotice plugin;
@@ -48,6 +49,13 @@ public class CmdShutdown implements CommandExecutor {
 			String message = plugin.getConfig().getString("cancel-message", defaultMsg);
 			message = plugin.formatMessage(message, 0, plugin.getShutdownType());
 			Bukkit.getServer().broadcastMessage(plugin.colorize(message));
+			if (plugin.getConfig().getBoolean("use-scoreboard", true)) {
+				plugin.getScoreboard().resetScores(Bukkit.getOfflinePlayer("Shutdown:"));
+				plugin.getScoreboard().resetScores(Bukkit.getOfflinePlayer("Restart:"));
+				plugin.getScoreboard().resetScores(Bukkit.getOfflinePlayer("Reboot:"));
+				for (Player player : Bukkit.getOnlinePlayers())
+					player.setScoreboard(plugin.getScoreboardManager().getNewScoreboard());
+			}
 			return true;
 		}
 		if (plugin.getTimeLeft() != null) {

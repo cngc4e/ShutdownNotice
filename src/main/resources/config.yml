@@ -17,6 +17,9 @@ cancel-message: "&1[&4ATTENTION&1] &eThe &4{shutdowntype} &ehas been cancelled!"
 # Example: Shutdown in 60 seconds, if this is set to 10 the plugin will notify a total of 6 times. 
 notify-every: 30
 
+# Enable use of a scoreboard to show live countdown every second
+use-scoreboard: true
+
 # Commands for CONSOLE to perform RIGHT BEFORE the shutdown once the timer hits 0
 shutdown-commands:
 - kickall

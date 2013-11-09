@@ -9,12 +9,21 @@ import net.pl3x.shutdownnotice.tasks.Check;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 import org.mcstats.Metrics;
 
 public class ShutdownNotice extends JavaPlugin {
 	private Integer timeLeft;
 	private ShutdownType shutdownType;
 	private String reason;
+	private ScoreboardManager manager;
+	private Scoreboard board;
+	private Objective objective;
+	private Score score;
 	
 	public void onEnable() {
 		if (!new File(getDataFolder() + File.separator + "config.yml").exists())
@@ -31,7 +40,15 @@ public class ShutdownNotice extends JavaPlugin {
 			log("&4[ERROR] &rFailed to start Metrics: " + e.getMessage());
 		}
 		
-		Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Check(this), 20, 20);
+		if (getConfig().getBoolean("use-scoreboard", true)) {
+			manager = Bukkit.getScoreboardManager();
+			board = manager.getNewScoreboard();
+			objective = board.registerNewObjective("ShutdownNotice", "dummy");
+			objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+			objective.setDisplayName("ShutdownNotice v" + getDescription().getVersion());
+		}
+		
+		Bukkit.getScheduler().runTaskTimer(this, new Check(this), 20, 20);
 		
 		log(getName() + " v" + getDescription().getVersion() + " by BillyGalbreath enabled!");
 	}
@@ -101,5 +118,25 @@ public class ShutdownNotice extends JavaPlugin {
 		if (seconds > 0)
 			msg += ((msg == "") ? "" : ", ") + seconds + " second" + ((seconds == 1) ? "" : "s");
 		return msg;
+	}
+	
+	public ScoreboardManager getScoreboardManager() {
+		return manager;
+	}
+	
+	public Scoreboard getScoreboard() {
+		return board;
+	}
+	
+	public Objective getObjective() {
+		return objective;
+	}
+	
+	public Score getScore() {
+		return score;
+	}
+	
+	public void setScore(Score score) {
+		this.score = score;
 	}
 }
