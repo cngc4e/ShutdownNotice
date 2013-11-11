@@ -50,9 +50,9 @@ public class CmdShutdown implements CommandExecutor {
 			message = plugin.formatMessage(message, 0, plugin.getShutdownType());
 			Bukkit.getServer().broadcastMessage(plugin.colorize(message));
 			if (plugin.getConfig().getBoolean("use-scoreboard", true)) {
-				plugin.getScoreboard().resetScores(Bukkit.getOfflinePlayer("Shutdown:"));
-				plugin.getScoreboard().resetScores(Bukkit.getOfflinePlayer("Restart:"));
-				plugin.getScoreboard().resetScores(Bukkit.getOfflinePlayer("Reboot:"));
+				plugin.getScoreboard().resetScores(Bukkit.getOfflinePlayer("Shutdown in:"));
+				plugin.getScoreboard().resetScores(Bukkit.getOfflinePlayer("Restart in:"));
+				plugin.getScoreboard().resetScores(Bukkit.getOfflinePlayer("Reboot in:"));
 				for (Player player : Bukkit.getOnlinePlayers())
 					player.setScoreboard(plugin.getScoreboardManager().getNewScoreboard());
 			}
