@@ -18,9 +18,8 @@ public class Check implements Runnable {
 		if (timeLeft == null)
 			return;
 		if (plugin.getConfig().getBoolean("use-scoreboard", true)) {
-			String type = plugin.getShutdownType().getName();
-			type = Character.toUpperCase(type.charAt(0)) + type.substring(1);
-			plugin.setScore(plugin.getObjective().getScore(Bukkit.getOfflinePlayer(type + " in:")));
+			plugin.getObjective().setDisplayName(plugin.colorize("&4" + plugin.getShutdownType().getName().toUpperCase()));
+			plugin.setScore(plugin.getObjective().getScore(Bukkit.getOfflinePlayer(plugin.colorize("&aIn:"))));
 			plugin.getScore().setScore(timeLeft);
 			for (Player player : Bukkit.getOnlinePlayers())
 				player.setScoreboard(plugin.getScoreboard());
