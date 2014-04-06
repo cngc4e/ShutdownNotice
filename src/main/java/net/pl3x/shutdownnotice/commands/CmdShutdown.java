@@ -1,5 +1,6 @@
 package net.pl3x.shutdownnotice.commands;
 
+import net.pl3x.shutdownnotice.Shutdown;
 import net.pl3x.shutdownnotice.ShutdownNotice;
 import net.pl3x.shutdownnotice.ShutdownType;
 
@@ -11,11 +12,11 @@ import org.bukkit.entity.Player;
 
 public class CmdShutdown implements CommandExecutor {
 	private ShutdownNotice plugin;
-	
+
 	public CmdShutdown(ShutdownNotice plugin) {
 		this.plugin = plugin;
 	}
-	
+
 	private String getFinalArg(final String[] args, final int start) {
 		final StringBuilder bldr = new StringBuilder();
 		for (int i = start; i < args.length; i++) {
@@ -26,7 +27,7 @@ public class CmdShutdown implements CommandExecutor {
 		}
 		return bldr.toString();
 	}
-	
+
 	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
 		if (!cmd.getName().equalsIgnoreCase("shutdown"))
 			return false;
@@ -39,24 +40,22 @@ public class CmdShutdown implements CommandExecutor {
 			cs.sendMessage(plugin.colorize("&4Must specify a time to delay!"));
 			return true;
 		}
+		Shutdown shutdown = plugin.getShutdown();
 		if (args[0].equalsIgnoreCase("cancel") || args[0].equalsIgnoreCase("stop") || args[0].equalsIgnoreCase("abort") || args[0].equalsIgnoreCase("off") || args[0].equalsIgnoreCase("0")) {
-			if (plugin.getTimeLeft() == null) {
+			if (shutdown.getTime() == null) {
 				cs.sendMessage(plugin.colorize("&4Nothing to cancel!"));
 				return true;
 			}
-			plugin.setTimeLeft(null);
-			String defaultMsg = "&1[&4ATTENTION&1] &eThe &4{shutdowntype} &ehas been cancelled!";
-			String message = plugin.getConfig().getString("cancel-message", defaultMsg);
-			message = plugin.formatMessage(message, 0, plugin.getShutdownType());
-			Bukkit.getServer().broadcastMessage(plugin.colorize(message));
+			shutdown.broadcastMessage(plugin.getConfig().getString("cancel-message", "&1[&4ATTENTION&1] &eThe &4{shutdowntype} &ehas been cancelled!"));
 			if (plugin.getConfig().getBoolean("use-scoreboard", true)) {
-				plugin.getScoreboard().resetScores(Bukkit.getOfflinePlayer(plugin.colorize("&aIn:")));
+				shutdown.getScoreboardController().getScoreboard().resetScores(Bukkit.getOfflinePlayer(plugin.colorize(plugin.getConfig().getString("timeleft-scoreboard", "&aIn:"))));
 				for (Player player : Bukkit.getOnlinePlayers())
-					player.setScoreboard(plugin.getScoreboardManager().getNewScoreboard());
+					player.setScoreboard(shutdown.getScoreboardController().getScoreboardManager().getNewScoreboard());
 			}
+			shutdown.setTime(null);
 			return true;
 		}
-		if (plugin.getTimeLeft() != null) {
+		if (shutdown.getTime() != null) {
 			cs.sendMessage(plugin.colorize("&4There is a shutdown already in progress!"));
 			return true;
 		}
@@ -68,15 +67,17 @@ public class CmdShutdown implements CommandExecutor {
 			return true;
 		}
 		if (args.length > 1)
-			plugin.setReason(getFinalArg(args, 1));
+			shutdown.setReason(getFinalArg(args, 1));
 		ShutdownType shutdownType = ShutdownType.SHUTDOWN;
 		if (label.equalsIgnoreCase("RESTART"))
 			shutdownType = ShutdownType.RESTART;
 		if (label.equalsIgnoreCase("REBOOT"))
 			shutdownType = ShutdownType.REBOOT;
-		plugin.setTimeLeft(delay);
-		plugin.setShutdownType(shutdownType);
+		shutdown.setTime(delay - 1);
+		shutdown.setType(shutdownType);
 		cs.sendMessage(plugin.colorize("&dShutdown task started!"));
+		plugin.getShutdown().broadcastMessage(plugin.getConfig().getString("shutdown-message", "&1[&4ATTENTION&1] &eThe server will &4{shutdowntype} &ein &7{timeleft}&e for {reason}!"));
+		shutdown.setTime(delay);
 		return true;
 	}
 }
