@@ -39,7 +39,7 @@ public class CmdShutdown implements CommandExecutor {
 			cs.sendMessage(plugin.colorize("&4Must specify a time to delay!"));
 			return true;
 		}
-		if (args[0].equalsIgnoreCase("cancel")) {
+		if (args[0].equalsIgnoreCase("cancel") || args[0].equalsIgnoreCase("stop") || args[0].equalsIgnoreCase("abort") || args[0].equalsIgnoreCase("off") || args[0].equalsIgnoreCase("0")) {
 			if (plugin.getTimeLeft() == null) {
 				cs.sendMessage(plugin.colorize("&4Nothing to cancel!"));
 				return true;
