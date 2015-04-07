@@ -4,34 +4,10 @@ debug-mode: false
 # Enable colors in console output
 color-logs: true
 
-# Shutdown types. This is for language translations.
-type-shutdown: "SHUTDOWN"
-type-restart: "RESTART"
-type-reboot: "REBOOT"
+# Update the server list ping MOTD to show when server is scheduled for shutdown/restart
+update-ping-motd: true
 
-# Shutdown message format
-shutdown-message: "&1[&4ATTENTION&1] &eThe server will &4{shutdowntype} &ein &7{timeleft}&e for {reason}!"
-
-# Default reason if none specified in command
-default-reason: "scheduled maintenance"
-
-# Cancel message format
-cancel-message: "&1[&4ATTENTION&1] &eThe &4{shutdowntype} &ehas been cancelled!"
-
-# How many seconds before shutdown should we notify? This repeats at specified increment until shutdown or cancelled.
-# Example: Shutdown in 60 seconds, if this is set to 10 the plugin will notify a total of 6 times every 10 seconds. 
-notify-every: 30
-
-# Enable use of a scoreboard to show live countdown every second
-use-scoreboard: true
-
-# Scoreboard Title. This is for language translations.
-title-scoreboard: "&e!! &4{shutdowntype} &e!!"
-
-# Scoreboard timeleft. This is for language translations.
-timeleft-scoreboard: "&aIn:"
-
-# Commands for CONSOLE to perform RIGHT BEFORE the shutdown once the timer hits 0
+# Commands to perform just before the server shuts down
 shutdown-commands:
+- say Goodbye.
 - kickall
-- save-all

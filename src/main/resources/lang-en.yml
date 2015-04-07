@@ -1,0 +1,23 @@
+command-no-perms: "&4You do not have permission for that!"
+command-missing-args: "&4Not enough arguments supplied!"
+unkown-command: "&4Unknown command!"
+
+nothing-to-cancel: "&4Nothing to cancel here!"
+process-cancelled: "&dProcess cancelled!"
+process-already-in-action: "&4Process already in action!"
+invalid-time: "&4Not a valid value for time!"
+time-not-positive: "&4Time must be a positive number!"
+
+time-format: "&7{minutes}&e:&7{seconds}"
+
+shutting-down: "Shutting Down"
+restarting: "Restarting"
+right-now: "&e&lRIGHT NOW!!!"
+
+ping-message: "&cServer is {action} in {time}"
+kick-message: "Server is {action}"
+
+actionbar-txt: "&4&l{action} In {time}"
+title-txt: "{time}"
+subtitlte-txt: "&4&l{action}"
+chat-txt: "&4&l{action} in {time}"

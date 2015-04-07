@@ -1,18 +1,17 @@
 name: ${project.name}
-main: ${main.class}
+main: net.pl3x.bukkit.shutdownnotice.Main
 version: ${project.version}
+website: ${project.url}
+description: Bukkit plugin to control server shutdowns and restarts
 author: BillyGalbreath
-description: Notify online players before a server shutdown.
 commands:
-    shutdown:
-        description: Shutdown the server after a delay.
-        usage: /<command> [delay (reason) | cancel]
-        aliases: [restart, reboot]
+  shutdown:
+    description: Shuts the server down (or optionally restarts it)
+    usage: /<command> [time (reason) | cancel]
+    aliases:
+    - restart
+    - reboot
 permissions:
-    shutdownnotice.*:
-        description: Gives every permission.
-        default: false
-        children:
-            shutdownnotice.command.shutdown:
-                description: Allow player to use /shutdown command
-                default: op
+  command.shutdown:
+    description: Allows access to shutdown or restart the server.
+    default: op
