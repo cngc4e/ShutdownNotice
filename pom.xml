@@ -3,19 +3,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.pl3x.bukkit.shutdownnotice</groupId>
 	<artifactId>ShutdownNotice</artifactId>
-	<version>2.1</version>
+	<version>2.2</version>
 	<packaging>jar</packaging>
 	<name>ShutdownNotice</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.8.3-R0.1-SNAPSHOT</version>
+			<version>1.8.6-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.8.3-R0.1-SNAPSHOT</version>
+			<version>1.8.6-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mcstats.bukkit</groupId>
