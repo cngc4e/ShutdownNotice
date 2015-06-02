@@ -36,7 +36,7 @@ public class Countdown extends BukkitRunnable {
 
 		String seconds = String.format("%02d", timeLeft % 60);
 		String minutes = String.format("%02d", timeLeft / 60);
-		String time = "&7&l" + minutes + "&e&l:&7&l" + seconds;
+		String time = Lang.TIME_FORMAT.get().replace("minutes", minutes).replace("seconds", seconds);
 		String action = state.equals(State.SHUTDOWN) ? "Shutting Down" : "Restarting";
 
 		if (timeLeft <= 0) {

@@ -20,7 +20,7 @@ public enum Lang {
 	INVALID_TIME("&4Not a valid value for time!"),
 	TIME_NOT_POSITIVE("&4Time must be a positive number!"),
 
-	TIME_FORMAT("&7{minutes}&e:&7{seconds}"),
+	TIME_FORMAT("&7&l{minutes}&e&l:&7&l{seconds}"),
 
 	SHUTTING_DOWN("Shutting Down"),
 	RESTARTING("Restarting"),

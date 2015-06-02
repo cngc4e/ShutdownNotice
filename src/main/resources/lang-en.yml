@@ -8,7 +8,7 @@ process-already-in-action: "&4Process already in action!"
 invalid-time: "&4Not a valid value for time!"
 time-not-positive: "&4Time must be a positive number!"
 
-time-format: "&7{minutes}&e:&7{seconds}"
+time-format: "&7&l{minutes}&e&l:&7&l{seconds}"
 
 shutting-down: "Shutting Down"
 restarting: "Restarting"
