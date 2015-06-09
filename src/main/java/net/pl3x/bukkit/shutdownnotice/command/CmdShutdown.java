@@ -43,6 +43,11 @@ public class CmdShutdown implements CommandExecutor {
 			return true;
 		}
 
+		if (args[0].equalsIgnoreCase("version")) {
+			ChatManager.sendChatMessage(sender, plugin.getName() + " v" + plugin.getDescription().getVersion());
+			return true;
+		}
+
 		if (!state.equals(State.RUNNING)) {
 			ChatManager.sendChatMessage(sender, Lang.PROCESS_ALREADY_IN_ACTION.get());
 			return true;

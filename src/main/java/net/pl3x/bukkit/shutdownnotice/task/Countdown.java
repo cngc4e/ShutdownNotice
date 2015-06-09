@@ -1,9 +1,13 @@
 package net.pl3x.bukkit.shutdownnotice.task;
 
-import net.pl3x.bukkit.shutdownnotice.Logger;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import net.pl3x.bukkit.shutdownnotice.Main;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus.State;
+import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
 import net.pl3x.bukkit.shutdownnotice.manager.ChatManager;
 
@@ -36,8 +40,8 @@ public class Countdown extends BukkitRunnable {
 
 		String seconds = String.format("%02d", timeLeft % 60);
 		String minutes = String.format("%02d", timeLeft / 60);
-		String time = Lang.TIME_FORMAT.get().replace("minutes", minutes).replace("seconds", seconds);
-		String action = state.equals(State.SHUTDOWN) ? "Shutting Down" : "Restarting";
+		String time = Lang.TIME_FORMAT.get().replace("{minutes}", minutes).replace("{seconds}", seconds);
+		String action = state.equals(State.SHUTDOWN) ? Lang.SHUTTING_DOWN.get() : Lang.RESTARTING.get();
 
 		if (timeLeft <= 0) {
 			String rightNow = Lang.RIGHT_NOW.get();
@@ -59,23 +63,26 @@ public class Countdown extends BukkitRunnable {
 		boolean broadcast = false;
 		if (firstRun) {
 			broadcast = true; // always show on first run
-		} else if (timeLeft % 60 == 0) {
-			broadcast = true; // chat and title notice every minute
-		} else if (timeLeft == 30) {
-			broadcast = true; // chat and title notice 30 second warning
-		} else if (timeLeft <= 10) {
-			broadcast = true; // chat and title notice 10 second warning (repeat every second until finished)
+		} else {
+			ScriptEngineManager factory = new ScriptEngineManager();
+			ScriptEngine engine = factory.getEngineByName("JavaScript");
+			for (String condition : Config.DISPLAY_INTERVALS.getStringList()) {
+				try {
+					engine.eval("timeLeft = " + timeLeft);
+					if ((Boolean) engine.eval(condition)) {
+						broadcast = true;
+						break;
+					}
+				} catch (ScriptException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		String actionBarTxt = Lang.ACTIONBAR_TXT.get().replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
 		String titleTxt = Lang.TITLE_TXT.get().replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
 		String subtitleTxt = Lang.SUBTITLE_TXT.get().replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
 		String chatTxt = Lang.CHAT_TXT.get().replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
-
-		Logger.log(actionBarTxt);
-		Logger.log(titleTxt);
-		Logger.log(subtitleTxt);
-		Logger.log(chatTxt);
 
 		// broadcast actionbar timer always
 		ChatManager.broadcastActionbarMessage(actionBarTxt);

@@ -9,7 +9,8 @@ public enum Config {
 	DEBUG_MODE(false),
 	LANGUAGE_FILE("lang-en.yml"),
 	UPDATE_PING_MOTD(true),
-	SHUTDOWN_COMMANDS(null);
+	SHUTDOWN_COMMANDS(null),
+	DISPLAY_INTERVALS(null);
 
 	private Main plugin;
 	private final Object def;

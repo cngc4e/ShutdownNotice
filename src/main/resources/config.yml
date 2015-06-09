@@ -11,3 +11,12 @@ update-ping-motd: true
 shutdown-commands:
 - say Goodbye.
 - kickall
+
+# When should the countdown message be displayed to the user?
+# This setting only effects the title and chat. The hotbar text
+# will always be shown.
+# Warning: For advanced users only!
+display-intervals:
+- timeLeft % 60 == 0
+- timeLeft == 30
+- timeLeft <= 10

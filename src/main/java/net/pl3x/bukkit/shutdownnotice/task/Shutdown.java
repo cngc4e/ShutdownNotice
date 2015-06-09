@@ -27,6 +27,7 @@ public class Shutdown extends BukkitRunnable {
 		ServerStatus status = plugin.getStatus();
 		State state = status.getState();
 		String reason = status.getReason();
+		String action = "";
 
 		if (reason == null) {
 			reason = "";
@@ -39,19 +40,21 @@ public class Shutdown extends BukkitRunnable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			action = Lang.RESTARTING.get();
+		} else {
+			action = Lang.SHUTTING_DOWN.get();
 		}
 
 		// run configured commands before shutting down
 		List<String> shutdownCommands = Config.SHUTDOWN_COMMANDS.getStringList();
 		for (String command : shutdownCommands) {
-			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command.replace("{action}", action).replace("{reason}", reason));
 		}
 
 		// always perform save-all command
 		Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "save-all");
 
 		// always kick all players
-		String action = state.equals(State.SHUTDOWN) ? Lang.SHUTTING_DOWN.get() : Lang.RESTARTING.get();
 		String kickMessage = ChatColor.translateAlternateColorCodes('&', Lang.KICK_MESSAGE.get().replace("{action}", action).replace("{reason}", reason));
 
 		for (Player player : Bukkit.getOnlinePlayers()) {
