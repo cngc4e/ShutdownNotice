@@ -19,5 +19,5 @@ kick-message: "Server is {action}"
 
 actionbar-txt: "&4&l{action} In {time}"
 title-txt: "{time}"
-subtitlte-txt: "&4&l{action}"
+subtitle-txt: "&4&l{action}"
 chat-txt: "&4&l{action} in {time}"
