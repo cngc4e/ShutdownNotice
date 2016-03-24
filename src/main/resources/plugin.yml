@@ -15,3 +15,6 @@ permissions:
   command.shutdown:
     description: Allows access to shutdown or restart the server.
     default: op
+  command.shutdown.reload:
+    description: Allows reloading of plugin.
+    default: op

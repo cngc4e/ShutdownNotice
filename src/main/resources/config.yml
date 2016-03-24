@@ -10,7 +10,6 @@ update-ping-motd: true
 # Commands to perform just before the server shuts down
 shutdown-commands:
 - say Goodbye.
-- kickall
 
 # When should the countdown message be displayed to the user?
 # This setting only effects the title and chat. The hotbar text

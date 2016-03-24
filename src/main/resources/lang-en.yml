@@ -15,9 +15,9 @@ restarting: "Restarting"
 right-now: "&e&lRIGHT NOW!!!"
 
 ping-message: "&cServer is {action} in {time}"
-kick-message: "Server is {action}"
+kick-message: "Server is {action}\n{reason}"
 
 actionbar-txt: "&4&l{action} In {time}"
 title-txt: "{time}"
 subtitle-txt: "&4&l{action}"
-chat-txt: "&4&l{action} in {time}"
+chat-txt: "&4&l{action} in {time} &4&lfor &e{reason}"

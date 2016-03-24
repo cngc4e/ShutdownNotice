@@ -1,11 +1,9 @@
 package net.pl3x.bukkit.shutdownnotice.listener;
 
-import net.pl3x.bukkit.shutdownnotice.Main;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus.State;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
-
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,39 +11,33 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
 public class PingListener implements Listener {
-	private Main plugin;
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onServerListPing(ServerListPingEvent event) {
+        if (!Config.UPDATE_PING_MOTD.getBoolean()) {
+            return;
+        }
 
-	public PingListener(Main plugin) {
-		this.plugin = plugin;
-	}
+        ServerStatus status = ServerStatus.getStatus();
+        State state = status.getState();
+        Integer timeLeft = status.getTimeLeft();
+        String reason = status.getReason();
 
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onServerListPing(ServerListPingEvent event) {
-		if (!Config.UPDATE_PING_MOTD.getBoolean()) {
-			return;
-		}
+        if (state == null || state.equals(State.RUNNING) || timeLeft == null) {
+            return;
+        }
 
-		ServerStatus status = plugin.getStatus();
-		State state = status.getState();
-		Integer timeLeft = status.getTimeLeft();
-		String reason = status.getReason();
+        if (reason == null) {
+            reason = "";
+        }
 
-		if (state == null || state.equals(State.RUNNING) || timeLeft == null) {
-			return;
-		}
+        int seconds = timeLeft % 60;
+        int minutes = timeLeft / 60;
 
-		if (reason == null) {
-			reason = "";
-		}
+        String time = Lang.TIME_FORMAT.replace("{minutes}", String.format("%02d", minutes)).replace("{seconds}", String.format("%02d", seconds));
+        String action = state.equals(State.SHUTDOWN) ? Lang.SHUTTING_DOWN.toString() : Lang.RESTARTING.toString();
 
-		int seconds = timeLeft % 60;
-		int minutes = timeLeft / 60;
+        String pingMessage = Lang.PING_MESSAGE.replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
 
-		String time = Lang.TIME_FORMAT.get().replace("{minutes}", String.format("%02d", minutes)).replace("{seconds}", String.format("%02d", seconds));
-		String action = state.equals(State.SHUTDOWN) ? Lang.SHUTTING_DOWN.get() : Lang.RESTARTING.get();
-
-		String pingMessage = Lang.PING_MESSAGE.get().replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
-
-		event.setMotd(ChatColor.translateAlternateColorCodes('&', pingMessage));
-	}
+        event.setMotd(ChatColor.translateAlternateColorCodes('&', pingMessage));
+    }
 }

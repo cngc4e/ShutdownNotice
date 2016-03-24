@@ -1,67 +1,105 @@
 package net.pl3x.bukkit.shutdownnotice.command;
 
+import net.pl3x.bukkit.shutdownnotice.Chat;
 import net.pl3x.bukkit.shutdownnotice.Main;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus.State;
+import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
-import net.pl3x.bukkit.shutdownnotice.manager.ChatManager;
 import net.pl3x.bukkit.shutdownnotice.task.Countdown;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 
-public class CmdShutdown implements CommandExecutor {
-    private Main plugin;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class CmdShutdown implements TabExecutor {
+    private final Main plugin;
 
     public CmdShutdown(Main plugin) {
         this.plugin = plugin;
     }
 
     @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        List<String> list = new ArrayList<>();
+        if (args.length == 0) {
+            list.addAll(Arrays.asList("cancel", "abort", "stop", "off", "0", "version", "reload").stream()
+                    .filter(possible -> possible.startsWith(args[0].toLowerCase()))
+                    .collect(Collectors.toList()));
+        }
+        return list;
+    }
+
+    @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!sender.hasPermission("command.shutdown")) {
-            ChatManager.sendChatMessage(sender, Lang.COMMAND_NO_PERMS.get());
+            new Chat(Lang.COMMAND_NO_PERMS).send(sender);
             return true;
         }
 
         if (args.length < 1) {
-            ChatManager.sendChatMessage(sender, Lang.COMMAND_MISSING_ARGS.get());
+            new Chat(Lang.COMMAND_MISSING_ARGS).send(sender);
             return false;
         }
 
-        ServerStatus status = plugin.getStatus();
+        ServerStatus status = ServerStatus.getStatus();
         State state = status.getState();
 
         if (args[0].equalsIgnoreCase("cancel") || args[0].equalsIgnoreCase("abort") || args[0].equalsIgnoreCase("stop") || args[0].equalsIgnoreCase("off") || args[0].equalsIgnoreCase("0")) {
             if (state.equals(State.RUNNING)) {
-                ChatManager.sendChatMessage(sender, Lang.NOTHING_TO_CANCEL.get());
+                new Chat(Lang.NOTHING_TO_CANCEL).send(sender);
                 return true;
             }
             status.setStatus(State.RUNNING, null, null);
-            ChatManager.sendChatMessage(sender, Lang.PROCESS_CANCELLED.get());
+            new Chat(Lang.PROCESS_CANCELLED).send(sender);
             return true;
         }
 
         if (args[0].equalsIgnoreCase("version")) {
-            ChatManager.sendChatMessage(sender, plugin.getName() + " v" + plugin.getDescription().getVersion());
+            new Chat(Lang.VERSION
+                    .replace("{plugin}", plugin.getName())
+                    .replace("{version}", plugin.getDescription().getVersion()))
+                    .send(sender);
+            return true;
+        }
+
+        if (args[0].equalsIgnoreCase("reload")) {
+            if (!sender.hasPermission("command.shutdown.reload")) {
+                new Chat(Lang.COMMAND_NO_PERMS).send(sender);
+                return true;
+            }
+
+            Config.reload();
+            Lang.reload(true);
+
+            status.setStatus(State.RUNNING, null, null);
+
+            new Chat(Lang.RELOAD
+                    .replace("{plugin}", plugin.getName())
+                    .replace("{version}", plugin.getDescription().getVersion()))
+                    .send(sender);
             return true;
         }
 
         if (!state.equals(State.RUNNING)) {
-            ChatManager.sendChatMessage(sender, Lang.PROCESS_ALREADY_IN_ACTION.get());
+            new Chat(Lang.PROCESS_ALREADY_IN_ACTION).send(sender);
             return true;
         }
 
-        int time = -1;
+        int time;
         try {
             time = Integer.valueOf(args[0]);
         } catch (NumberFormatException e) {
-            ChatManager.sendChatMessage(sender, Lang.INVALID_TIME.get());
+            new Chat(Lang.INVALID_TIME).send(sender);
             return true;
         }
 
         if (time <= 0) {
-            ChatManager.sendChatMessage(sender, Lang.TIME_NOT_POSITIVE.get());
+            new Chat(Lang.TIME_NOT_POSITIVE).send(sender);
             return true;
         }
 
@@ -73,7 +111,7 @@ public class CmdShutdown implements CommandExecutor {
         } else if (label.equalsIgnoreCase("reboot")) {
             newState = State.RESTART;
         } else {
-            ChatManager.sendChatMessage(sender, Lang.UNKNOWN_COMMAND.get());
+            new Chat(Lang.UNKNOWN_COMMAND).send(sender);
             return true;
         }
 

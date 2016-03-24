@@ -1,31 +1,41 @@
 package net.pl3x.bukkit.shutdownnotice;
 
 public class ServerStatus {
-	public enum State {
-		RUNNING, // server is running
-		SHUTDOWN, // server is shutting down
-		RESTART; // server is restarting
-	}
+    public enum State {
+        RUNNING, // server is running
+        SHUTDOWN, // server is shutting down
+        RESTART // server is restarting
+    }
 
-	private State state;
-	private Integer timeLeft;
-	private String reason;
+    private static ServerStatus status;
 
-	public void setStatus(State state, Integer timeLeft, String reason) {
-		this.state = state;
-		this.timeLeft = timeLeft;
-		this.reason = reason;
-	}
+    public static ServerStatus getStatus() {
+        if (status == null) {
+            status = new ServerStatus();
+            status.setStatus(State.RUNNING, null, null);
+        }
+        return status;
+    }
 
-	public State getState() {
-		return state;
-	}
+    private State state;
+    private Integer timeLeft;
+    private String reason;
 
-	public Integer getTimeLeft() {
-		return timeLeft;
-	}
+    public void setStatus(State state, Integer timeLeft, String reason) {
+        this.state = state;
+        this.timeLeft = timeLeft;
+        this.reason = reason;
+    }
 
-	public String getReason() {
-		return reason;
-	}
+    public State getState() {
+        return state;
+    }
+
+    public Integer getTimeLeft() {
+        return timeLeft;
+    }
+
+    public String getReason() {
+        return reason;
+    }
 }
