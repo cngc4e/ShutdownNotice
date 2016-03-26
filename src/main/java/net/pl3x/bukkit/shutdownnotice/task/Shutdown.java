@@ -70,6 +70,6 @@ public class Shutdown extends BukkitRunnable {
 
         // finally stop the server
         Logger.debug("Performing command: stop");
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "stop");
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "minecraft:stop");
     }
 }
