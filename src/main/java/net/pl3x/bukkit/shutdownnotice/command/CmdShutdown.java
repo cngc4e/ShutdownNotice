@@ -116,7 +116,7 @@ public class CmdShutdown implements TabExecutor {
         }
 
         String reason = null;
-        if (args.length > 2) {
+        if (args.length > 1) {
             StringBuilder sb = new StringBuilder();
             for (int i = 1; i < args.length; i++) {
                 sb.append(args[i]).append(" ");
