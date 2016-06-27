@@ -1,6 +1,7 @@
 package net.pl3x.bukkit.shutdownnotice;
 
 import net.pl3x.bukkit.shutdownnotice.command.CmdShutdown;
+import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
 import net.pl3x.bukkit.shutdownnotice.listener.CommandListener;
 import net.pl3x.bukkit.shutdownnotice.listener.PingListener;
 import org.bukkit.Bukkit;
@@ -12,6 +13,8 @@ public class ShutdownNotice extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+
+        Lang.reload();
 
         if (new File(getDataFolder(), "restart").delete()) {
             Logger.debug("Deleting restart file.");

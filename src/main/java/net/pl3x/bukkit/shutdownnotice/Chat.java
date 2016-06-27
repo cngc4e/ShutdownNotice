@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class Chat {
-    private String message;
+    private final String message;
 
     public Chat(Lang lang) {
         this(lang.toString());
