@@ -1,9 +1,8 @@
-name: ${project.name}
-main: net.pl3x.bukkit.shutdownnotice.Main
+name: ${project.artifactId}
+main: ${project.groupId}.${project.artifactId}
 version: ${project.version}
-website: ${project.url}
-description: Bukkit plugin to control server shutdowns and restarts
 author: BillyGalbreath
+description: ${project.artifactId} Bukkit Plugin
 commands:
   shutdown:
     description: Shuts the server down (or optionally restarts it)

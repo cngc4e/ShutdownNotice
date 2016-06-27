@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public class Main extends JavaPlugin {
+public class ShutdownNotice extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();

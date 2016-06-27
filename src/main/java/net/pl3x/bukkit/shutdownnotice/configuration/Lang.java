@@ -1,7 +1,7 @@
 package net.pl3x.bukkit.shutdownnotice.configuration;
 
 import net.pl3x.bukkit.shutdownnotice.Logger;
-import net.pl3x.bukkit.shutdownnotice.Main;
+import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -54,9 +54,9 @@ public enum Lang {
         if (configFile == null || force) {
             String lang = Config.LANGUAGE_FILE.getString();
             Logger.debug("Loading language file: " + lang);
-            configFile = new File(Main.getPlugin(Main.class).getDataFolder(), lang);
+            configFile = new File(ShutdownNotice.getPlugin(ShutdownNotice.class).getDataFolder(), lang);
             if (!configFile.exists()) {
-                Main.getPlugin(Main.class).saveResource(Config.LANGUAGE_FILE.getString(), false);
+                ShutdownNotice.getPlugin(ShutdownNotice.class).saveResource(Config.LANGUAGE_FILE.getString(), false);
             }
         }
         config = YamlConfiguration.loadConfiguration(configFile);

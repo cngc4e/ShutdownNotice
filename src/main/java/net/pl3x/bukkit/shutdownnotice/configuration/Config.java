@@ -1,6 +1,6 @@
 package net.pl3x.bukkit.shutdownnotice.configuration;
 
-import net.pl3x.bukkit.shutdownnotice.Main;
+import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
 
 import java.util.List;
 
@@ -12,16 +12,16 @@ public enum Config {
     SHUTDOWN_COMMANDS(null),
     DISPLAY_INTERVALS(null);
 
-    private final Main plugin;
+    private final ShutdownNotice plugin;
     private final Object def;
 
     Config(Object def) {
-        this.plugin = Main.getPlugin(Main.class);
+        this.plugin = ShutdownNotice.getPlugin(ShutdownNotice.class);
         this.def = def;
     }
 
     public static void reload() {
-        Main.getPlugin(Main.class).reloadConfig();
+        ShutdownNotice.getPlugin(ShutdownNotice.class).reloadConfig();
     }
 
     private String getKey() {

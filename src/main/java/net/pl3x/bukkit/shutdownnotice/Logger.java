@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 
 public class Logger {
     private static void log(String msg) {
-        msg = ChatColor.translateAlternateColorCodes('&', "&3[&d" + Main.getPlugin(Main.class).getName() + "&3]&r " + msg);
+        msg = ChatColor.translateAlternateColorCodes('&', "&3[&d" + ShutdownNotice.getPlugin(ShutdownNotice.class).getName() + "&3]&r " + msg);
         if (!Config.COLOR_LOGS.getBoolean()) {
             msg = ChatColor.stripColor(msg);
         }

@@ -1,9 +1,9 @@
 package net.pl3x.bukkit.shutdownnotice.command;
 
 import net.pl3x.bukkit.shutdownnotice.Chat;
-import net.pl3x.bukkit.shutdownnotice.Main;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus.State;
+import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
 import net.pl3x.bukkit.shutdownnotice.task.Countdown;
@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CmdShutdown implements TabExecutor {
-    private final Main plugin;
+    private final ShutdownNotice plugin;
 
-    public CmdShutdown(Main plugin) {
+    public CmdShutdown(ShutdownNotice plugin) {
         this.plugin = plugin;
     }
 

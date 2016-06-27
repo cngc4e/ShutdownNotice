@@ -2,9 +2,9 @@ package net.pl3x.bukkit.shutdownnotice.task;
 
 import net.pl3x.bukkit.shutdownnotice.ActionBar;
 import net.pl3x.bukkit.shutdownnotice.Chat;
-import net.pl3x.bukkit.shutdownnotice.Main;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus.State;
+import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
 import net.pl3x.bukkit.shutdownnotice.Title;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
@@ -15,10 +15,10 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 public class Countdown extends BukkitRunnable {
-    private final Main plugin;
+    private final ShutdownNotice plugin;
     private boolean firstRun = true;
 
-    public Countdown(Main plugin) {
+    public Countdown(ShutdownNotice plugin) {
         this.plugin = plugin;
     }
 

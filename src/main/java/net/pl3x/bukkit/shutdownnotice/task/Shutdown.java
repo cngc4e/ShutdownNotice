@@ -1,9 +1,9 @@
 package net.pl3x.bukkit.shutdownnotice.task;
 
 import net.pl3x.bukkit.shutdownnotice.Logger;
-import net.pl3x.bukkit.shutdownnotice.Main;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus.State;
+import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
 import org.bukkit.Bukkit;
@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class Shutdown extends BukkitRunnable {
-    private final Main plugin;
+    private final ShutdownNotice plugin;
 
-    public Shutdown(Main plugin) {
+    public Shutdown(ShutdownNotice plugin) {
         this.plugin = plugin;
     }
 

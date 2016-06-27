@@ -13,9 +13,7 @@ public class Chat {
     }
 
     public Chat(String message) {
-        this.message = message;
-
-        colorize(); // auto color new chat messages
+        this.message = ChatColor.translateAlternateColorCodes('&', message);
     }
 
     public void send(CommandSender recipient) {
@@ -31,9 +29,5 @@ public class Chat {
     public void broadcast() {
         Bukkit.getOnlinePlayers().forEach(this::send);
         send(Bukkit.getConsoleSender());
-    }
-
-    private void colorize() {
-        message = ChatColor.translateAlternateColorCodes('&', message);
     }
 }
