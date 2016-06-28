@@ -1,13 +1,19 @@
 package net.pl3x.bukkit.shutdownnotice.task;
 
-import net.pl3x.bukkit.shutdownnotice.ActionBar;
-import net.pl3x.bukkit.shutdownnotice.Chat;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.pl3x.bukkit.chatapi.ComponentSender;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus;
 import net.pl3x.bukkit.shutdownnotice.ServerStatus.State;
 import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
-import net.pl3x.bukkit.shutdownnotice.Title;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
+import net.pl3x.bukkit.titleapi.Title;
+import net.pl3x.bukkit.titleapi.api.TitleType;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.script.ScriptEngine;
@@ -52,9 +58,20 @@ public class Countdown extends BukkitRunnable {
             String subtitleTxt = Lang.SUBTITLE_TXT.replace("{action}", action).replace("{time}", rightNow).replace("{reason}", reason);
             String chatTxt = Lang.CHAT_TXT.replace("{action}", action).replace("{time}", rightNow).replace("{reason}", reason);
 
-            new ActionBar(actionBarTxt).broadcast();
-            new Title(titleTxt, subtitleTxt).broadcast();
-            new Chat(chatTxt).broadcast();
+            BaseComponent[] actionComponent = TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', actionBarTxt));
+            BaseComponent[] chatText = TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', chatTxt));
+            Title titleReset = new Title(TitleType.RESET, null);
+            Title titleTimings = new Title(5, 60, 10);
+            Title titleText = new Title(TitleType.TITLE, ChatColor.translateAlternateColorCodes('&', titleTxt), 5, 60, 10);
+            Title titleSubtext = new Title(TitleType.SUBTITLE, ChatColor.translateAlternateColorCodes('&', subtitleTxt), 5, 60, 10);
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                ComponentSender.sendMessage(online, ChatMessageType.ACTION_BAR, new TextComponent(BaseComponent.toLegacyText(actionComponent)));
+                ComponentSender.sendMessage(online, chatText);
+                titleReset.send(online);
+                titleTimings.send(online);
+                titleText.send(online);
+                titleSubtext.send(online);
+            }
 
             new Shutdown(plugin).runTaskLater(plugin, 20);
             this.cancel();
@@ -80,18 +97,32 @@ public class Countdown extends BukkitRunnable {
             }
         }
 
-        String actionBarTxt = Lang.ACTIONBAR_TXT.replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
-        String titleTxt = Lang.TITLE_TXT.replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
-        String subtitleTxt = Lang.SUBTITLE_TXT.replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
-        String chatTxt = Lang.CHAT_TXT.replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
-
         // broadcast actionbar timer always
-        new ActionBar(actionBarTxt).broadcast();
+        String actionBarTxt = Lang.ACTIONBAR_TXT.replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
+        BaseComponent[] actionComponent = TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', actionBarTxt));
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            ComponentSender.sendMessage(online, ChatMessageType.ACTION_BAR, new TextComponent(BaseComponent.toLegacyText(actionComponent)));
+        }
 
         // broadcast chat and title message
         if (broadcast) {
-            new Title(titleTxt, subtitleTxt).broadcast();
-            new Chat(chatTxt).broadcast();
+            String titleTxt = Lang.TITLE_TXT.replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
+            String subtitleTxt = Lang.SUBTITLE_TXT.replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
+            String chatTxt = Lang.CHAT_TXT.replace("{action}", action).replace("{time}", time).replace("{reason}", reason);
+
+            BaseComponent[] chatText = TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', chatTxt));
+            Title titleReset = new Title(TitleType.RESET, null);
+            Title titleTimings = new Title(5, 60, 10);
+            Title titleText = new Title(TitleType.TITLE, ChatColor.translateAlternateColorCodes('&', titleTxt), 5, 60, 10);
+            Title titleSubtext = new Title(TitleType.SUBTITLE, ChatColor.translateAlternateColorCodes('&', subtitleTxt), 5, 60, 10);
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', chatTxt)); // always include console
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                ComponentSender.sendMessage(online, chatText);
+                titleReset.send(online);
+                titleTimings.send(online);
+                titleText.send(online);
+                titleSubtext.send(online);
+            }
         }
 
         status.setStatus(state, timeLeft - 1, reason);
