@@ -10,6 +10,9 @@ commands:
     aliases:
     - restart
     - reboot
+    - sd
+    - rs
+    - rb
 permissions:
   command.shutdown:
     description: Allows access to shutdown or restart the server.

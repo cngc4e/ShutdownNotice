@@ -11,7 +11,7 @@ public class CommandListener implements Listener {
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage();
         String[] args = command.split(" ");
-        if (args.length == 0 || !args[0].equalsIgnoreCase("/restart")) {
+        if (args.length == 0 || !(args[0].equalsIgnoreCase("/restart") || args[0].equalsIgnoreCase("/rs"))) {
             return; // ignore
         }
         event.setMessage(command.replace("restart", "reboot"));
@@ -21,7 +21,7 @@ public class CommandListener implements Listener {
     public void onConsoleCommand(ServerCommandEvent event) {
         String command = event.getCommand();
         String[] args = command.split(" ");
-        if (args.length == 0 || !args[0].equalsIgnoreCase("restart")) {
+        if (args.length == 0 || !(args[0].equalsIgnoreCase("/restart") || args[0].equalsIgnoreCase("/rs"))) {
             return; // ignore
         }
         event.setCommand(command.replace("restart", "reboot"));
