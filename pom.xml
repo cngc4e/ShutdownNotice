@@ -3,25 +3,25 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.pl3x.bukkit.shutdownnotice</groupId>
     <artifactId>ShutdownNotice</artifactId>
-    <version>3.3-SNAPSHOT</version>
+    <version>3.3</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.10-R0.1-SNAPSHOT</version>
+            <version>1.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.pl3x.bukkit.chatapi</groupId>
             <artifactId>ChatComponentAPI</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.pl3x.bukkit.titleapi</groupId>
             <artifactId>TitleAPI</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
