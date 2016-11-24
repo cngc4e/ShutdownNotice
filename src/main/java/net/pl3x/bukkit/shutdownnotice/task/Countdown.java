@@ -138,5 +138,9 @@ public class Countdown extends BukkitRunnable {
         for (Player online : Bukkit.getOnlinePlayers()) {
             ComponentSender.sendMessage(online, chatText);
         }
+
+        if (plugin.getBotHook() != null) {
+            plugin.getBotHook().sendToDiscord("*" + chatTxt.trim() + "*");
+        }
     }
 }

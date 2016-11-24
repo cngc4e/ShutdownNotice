@@ -13,6 +13,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>net.pl3x.bukkit.pl3xbot</groupId>
+            <artifactId>Pl3xBot-API</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>net.pl3x.bukkit.chatapi</groupId>
             <artifactId>ChatComponentAPI</artifactId>
             <version>1.2</version>
