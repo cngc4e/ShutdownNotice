@@ -12,9 +12,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CmdShutdown implements TabExecutor {
     private final ShutdownNotice plugin;
@@ -27,7 +27,7 @@ public class CmdShutdown implements TabExecutor {
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         List<String> list = new ArrayList<>();
         if (args.length == 0) {
-            list.addAll(Arrays.asList("cancel", "abort", "stop", "off", "0", "version", "reload").stream()
+            list.addAll(Stream.of("cancel", "abort", "stop", "off", "0", "version", "reload")
                     .filter(possible -> possible.startsWith(args[0].toLowerCase()))
                     .collect(Collectors.toList()));
         }
@@ -50,12 +50,18 @@ public class CmdShutdown implements TabExecutor {
         State state = status.getState();
 
         if (args[0].equalsIgnoreCase("cancel") || args[0].equalsIgnoreCase("abort") || args[0].equalsIgnoreCase("stop") || args[0].equalsIgnoreCase("off") || args[0].equalsIgnoreCase("0")) {
-            if (state.equals(State.RUNNING)) {
-                new Chat(Lang.NOTHING_TO_CANCEL).send(sender);
-                return true;
+            switch (state) {
+                case RUNNING:
+                    new Chat(Lang.NOTHING_TO_CANCEL).send(sender);
+                    return true;
+                case SHUTDOWN:
+                    new Chat(Lang.SHUTDOWN_CANCELLED).broadcast();
+                    break;
+                case RESTART:
+                    new Chat(Lang.RESTART_CANCELLED).broadcast();
+                    break;
             }
             status.setStatus(State.RUNNING, null, null);
-            new Chat(Lang.PROCESS_CANCELLED).send(sender);
             return true;
         }
 

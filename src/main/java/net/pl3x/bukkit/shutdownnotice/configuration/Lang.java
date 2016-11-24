@@ -14,7 +14,8 @@ public enum Lang {
     UNKNOWN_COMMAND("&4Unknown command!"),
 
     NOTHING_TO_CANCEL("&4Nothing to cancel here!"),
-    PROCESS_CANCELLED("&dProcess cancelled!"),
+    SHUTDOWN_CANCELLED("&dShutdown cancelled!"),
+    RESTART_CANCELLED("&dRestart cancelled!"),
     PROCESS_ALREADY_IN_ACTION("&4Process already in action!"),
     INVALID_TIME("&4Not a valid value for time!"),
     TIME_NOT_POSITIVE("&4Time must be a positive number!"),
