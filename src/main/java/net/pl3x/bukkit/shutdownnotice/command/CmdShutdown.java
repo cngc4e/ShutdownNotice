@@ -50,16 +50,21 @@ public class CmdShutdown implements TabExecutor {
         State state = status.getState();
 
         if (args[0].equalsIgnoreCase("cancel") || args[0].equalsIgnoreCase("abort") || args[0].equalsIgnoreCase("stop") || args[0].equalsIgnoreCase("off") || args[0].equalsIgnoreCase("0")) {
+            String message = "";
             switch (state) {
                 case RUNNING:
                     new Chat(Lang.NOTHING_TO_CANCEL).send(sender);
                     return true;
                 case SHUTDOWN:
-                    new Chat(Lang.SHUTDOWN_CANCELLED).broadcast();
+                    message = Lang.SHUTDOWN_CANCELLED.toString();
                     break;
                 case RESTART:
-                    new Chat(Lang.RESTART_CANCELLED).broadcast();
+                    message = Lang.RESTART_CANCELLED.toString();
                     break;
+            }
+            new Chat(message).broadcast();
+            if (plugin.getBotHook() != null) {
+                plugin.getBotHook().sendToDiscord("*" + message.trim() + "*");
             }
             status.setStatus(State.RUNNING, null, null);
             return true;
