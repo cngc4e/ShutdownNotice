@@ -5,6 +5,7 @@ author: BillyGalbreath
 description: ${project.artifactId} Bukkit Plugin
 softdepend:
 - Pl3xBot
+
 commands:
   shutdown:
     description: Shuts the server down (or optionally restarts it)
@@ -15,6 +16,7 @@ commands:
     - sd
     - rs
     - rb
+
 permissions:
   command.shutdown:
     description: Allows access to shutdown or restart the server.

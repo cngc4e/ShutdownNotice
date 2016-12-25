@@ -12,10 +12,19 @@ shutdown-commands:
 - say Goodbye.
 
 # When should the countdown message be displayed to the user?
-# This setting only effects the title and chat. The hotbar text
-# will always be shown.
+# This setting only effects the title, subtitle, and chat.
 # Warning: For advanced users only!
 display-intervals:
-- timeLeft % 60 == 0
-- timeLeft == 30
-- timeLeft <= 10
+- timeLeft <= 900 && timeLeft % 300 == 0 # every 5 minutes starting at 15 minutes til
+- timeLeft <= 300 && timeLeft % 60 == 0 # every minute starting at 5 minutes til
+- timeLeft == 30 # 30 seconds til
+- timeLeft <= 10 # every second starting at 10 seconds til
+
+# Start showing the actionbar downdown every second (seconds until shutdown)
+display-actionbar: 900
+
+# Automatic restart time
+auto-restart:
+  time: "23:00"
+  reason: "Nightly Reboot"
+  countdown: 900

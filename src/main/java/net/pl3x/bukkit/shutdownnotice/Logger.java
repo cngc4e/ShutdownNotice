@@ -6,15 +6,15 @@ import org.bukkit.ChatColor;
 
 public class Logger {
     private static void log(String msg) {
-        msg = ChatColor.translateAlternateColorCodes('&', "&3[&d" + ShutdownNotice.getPlugin(ShutdownNotice.class).getName() + "&3]&r " + msg);
-        if (!Config.COLOR_LOGS.getBoolean()) {
+        msg = ChatColor.translateAlternateColorCodes('&', "&3[&d" + ShutdownNotice.getPlugin().getName() + "&3]&r " + msg);
+        if (!Config.COLOR_LOGS) {
             msg = ChatColor.stripColor(msg);
         }
         Bukkit.getServer().getConsoleSender().sendMessage(msg);
     }
 
     public static void debug(String msg) {
-        if (Config.DEBUG_MODE.getBoolean()) {
+        if (Config.DEBUG_MODE) {
             Logger.log("&7[&eDEBUG&7]&e " + msg);
         }
     }

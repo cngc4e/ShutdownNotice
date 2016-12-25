@@ -22,3 +22,6 @@ actionbar-txt: "&4&l{action} In {time}"
 title-txt: "{time}"
 subtitle-txt: "&4&l{action}"
 chat-txt: "&4&l{action} in {time} &4&lfor &e{reason}"
+
+version: "&d{plugin} v{version}"
+reload: "&d{plugin} v{version} reloaded."
