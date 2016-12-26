@@ -7,6 +7,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.time.LocalTime;
 import java.util.List;
 
+import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.SECONDS;
+
 public class Config {
     public static boolean COLOR_LOGS = true;
     public static boolean DEBUG_MODE = false;
@@ -35,6 +38,9 @@ public class Config {
 
         try {
             AUTO_RESTART_TIME = LocalTime.parse(config.getString("auto-restart.time"));
+            if (LocalTime.now().until(AUTO_RESTART_TIME, SECONDS) < 0) {
+                AUTO_RESTART_TIME = AUTO_RESTART_TIME.plus(24, HOURS);
+            }
         } catch (Exception ignore) {
             Logger.warn("No auto-restart time specified. Will not schedule an auto restart.");
         }
