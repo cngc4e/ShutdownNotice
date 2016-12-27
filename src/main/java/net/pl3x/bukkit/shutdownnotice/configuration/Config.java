@@ -4,6 +4,8 @@ import net.pl3x.bukkit.shutdownnotice.Logger;
 import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class Config {
     public static List<String> SHUTDOWN_COMMANDS;
     public static List<String> DISPLAY_INTERVALS;
     public static int DISPLAY_ACTIONBAR;
-    public static LocalTime AUTO_RESTART_TIME;
+    public static LocalDateTime AUTO_RESTART_TIME;
     public static String AUTO_RESTART_REASON;
     public static int AUTO_RESTART_COUNTDOWN;
 
@@ -37,12 +39,13 @@ public class Config {
         DISPLAY_ACTIONBAR = config.getInt("display-actionbar", 900);
 
         try {
-            AUTO_RESTART_TIME = LocalTime.parse(config.getString("auto-restart.time"));
+            AUTO_RESTART_TIME = LocalTime.parse(config.getString("auto-restart.time")).atDate(LocalDate.now());
             if (LocalTime.now().until(AUTO_RESTART_TIME, SECONDS) < 0) {
                 AUTO_RESTART_TIME = AUTO_RESTART_TIME.plus(24, HOURS);
             }
-        } catch (Exception ignore) {
+        } catch (Exception e) {
             Logger.warn("No auto-restart time specified. Will not schedule an auto restart.");
+            e.printStackTrace();
         }
         AUTO_RESTART_REASON = config.getString("auto-restart.reason", "Nightly Reboot");
         AUTO_RESTART_COUNTDOWN = config.getInt("auto-restart.countdown", 900);

@@ -1,16 +1,17 @@
 package net.pl3x.bukkit.shutdownnotice.task;
 
+import net.pl3x.bukkit.shutdownnotice.Logger;
 import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class InternalClock extends BukkitRunnable {
     private final ShutdownNotice plugin;
-    private LocalTime timeNow;
+    private LocalDateTime timeNow;
 
     public InternalClock(ShutdownNotice plugin) {
         this.plugin = plugin;
@@ -19,14 +20,15 @@ public class InternalClock extends BukkitRunnable {
 
     @Override
     public void run() {
-        this.timeNow = LocalTime.now();
+        this.timeNow = LocalDateTime.now();
 
-        LocalTime restartTime = Config.AUTO_RESTART_TIME;
+        LocalDateTime restartTime = Config.AUTO_RESTART_TIME;
         if (restartTime == null) {
             return; // no configured restart time
         }
 
         long timeLeft = timeNow.until(restartTime, SECONDS);
+        Logger.debug("TimeLeft: " + timeLeft);
         if (timeLeft > Config.AUTO_RESTART_COUNTDOWN) {
             return; // not ready for countdown
         }
@@ -40,7 +42,7 @@ public class InternalClock extends BukkitRunnable {
         countdown.runTaskTimerAsynchronously(plugin, 0, 20L);
     }
 
-    public LocalTime getTimeNow() {
+    public LocalDateTime getTimeNow() {
         return timeNow;
     }
 }
