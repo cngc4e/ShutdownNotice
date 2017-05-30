@@ -3,6 +3,7 @@ package net.pl3x.bukkit.shutdownnotice;
 import net.pl3x.bukkit.shutdownnotice.command.CmdShutdown;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
+import net.pl3x.bukkit.shutdownnotice.hook.DiscordSRVHook;
 import net.pl3x.bukkit.shutdownnotice.listener.CommandListener;
 import net.pl3x.bukkit.shutdownnotice.listener.PingListener;
 import net.pl3x.bukkit.shutdownnotice.task.Countdown;
@@ -13,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 
 public class ShutdownNotice extends JavaPlugin {
+    private DiscordSRVHook discordSRVHook;
     private InternalClock internalClock;
     private Countdown countdown;
 
@@ -23,6 +25,10 @@ public class ShutdownNotice extends JavaPlugin {
 
         if (new File(getDataFolder(), "restart").delete()) {
             Logger.info("Cleaning up after restart.");
+        }
+
+        if (getServer().getPluginManager().isPluginEnabled("DiscordSRV")) {
+            discordSRVHook = new DiscordSRVHook();
         }
 
         internalClock = new InternalClock(this);
@@ -54,5 +60,9 @@ public class ShutdownNotice extends JavaPlugin {
 
     public void setCountdown(Countdown countdown) {
         this.countdown = countdown;
+    }
+
+    public DiscordSRVHook getDiscordSRVHook() {
+        return discordSRVHook;
     }
 }

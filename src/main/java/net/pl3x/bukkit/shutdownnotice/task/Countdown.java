@@ -79,11 +79,17 @@ public class Countdown extends BukkitRunnable {
                 online.sendTitle(title, subTitle);
             }
 
-            String chatText = ChatColor.translateAlternateColorCodes('&', Lang.CHAT_TXT
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Lang.CHAT_TXT
                     .replace("{action}", action)
                     .replace("{time}", time)
-                    .replace("{reason}", reason));
-            Bukkit.broadcastMessage(chatText);
+                    .replace("{reason}", reason)));
+
+            if (plugin.getDiscordSRVHook() != null) {
+                plugin.getDiscordSRVHook().sendToDiscord(Lang.DISCORD_TXT
+                        .replace("{action}", action)
+                        .replace("{time}", time)
+                        .replace("{reason}", reason));
+            }
         }
 
         if (timeLeft <= Config.DISPLAY_ACTIONBAR) {

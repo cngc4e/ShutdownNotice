@@ -4,7 +4,7 @@ version: ${project.version}
 author: BillyGalbreath
 description: ${project.artifactId} Bukkit Plugin
 softdepend:
-- Pl3xBot
+- DiscordSRV
 
 commands:
   shutdown:
