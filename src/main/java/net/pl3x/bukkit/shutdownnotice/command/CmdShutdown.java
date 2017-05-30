@@ -91,11 +91,6 @@ public class CmdShutdown implements TabExecutor {
         }
 
         long timeLeft = (date - now) / 1000;
-
-        System.out.print("now: " + now);
-        System.out.print("date: " + date);
-        System.out.print("timeLeft: " + timeLeft);
-
         if (timeLeft < 1) {
             Lang.send(sender, Lang.TIME_NOT_POSITIVE);
             return true;

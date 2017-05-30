@@ -1,14 +1,9 @@
 package net.pl3x.bukkit.shutdownnotice.task;
 
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.pl3x.bukkit.chatapi.ComponentSender;
 import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
-import net.pl3x.bukkit.titleapi.Title;
-import net.pl3x.bukkit.titleapi.api.TitleType;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -72,32 +67,32 @@ public class Countdown extends BukkitRunnable {
                 .replace("{seconds}", String.format("%02d", timeLeft % 60));
 
         if (broadcast) {
-            new Title(TitleType.RESET, null)
-                    .broadcast();
-            new Title(TitleType.TITLE, ChatColor.translateAlternateColorCodes('&', Lang.TITLE_TXT
+            String title = ChatColor.translateAlternateColorCodes('&', Lang.TITLE_TXT
                     .replace("{action}", action)
                     .replace("{time}", time)
-                    .replace("{reason}", reason)))
-                    .broadcast();
-            new Title(TitleType.SUBTITLE, ChatColor.translateAlternateColorCodes('&', Lang.SUBTITLE_TXT
+                    .replace("{reason}", reason));
+            String subTitle = ChatColor.translateAlternateColorCodes('&', Lang.SUBTITLE_TXT
                     .replace("{action}", action)
                     .replace("{time}", time)
-                    .replace("{reason}", reason)))
-                    .broadcast();
-            Lang.broadcast(ChatColor.translateAlternateColorCodes('&', Lang.CHAT_TXT
+                    .replace("{reason}", reason));
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                online.sendTitle(title, subTitle);
+            }
+
+            String chatText = ChatColor.translateAlternateColorCodes('&', Lang.CHAT_TXT
                     .replace("{action}", action)
                     .replace("{time}", time)
-                    .replace("{reason}", reason)));
+                    .replace("{reason}", reason));
+            Bukkit.broadcastMessage(chatText);
         }
 
         if (timeLeft <= Config.DISPLAY_ACTIONBAR) {
-            TextComponent actionbar = new TextComponent(BaseComponent.toLegacyText(
-                    TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', Lang.ACTIONBAR_TXT
-                            .replace("{action}", action)
-                            .replace("{time}", time)
-                            .replace("{reason}", reason)))));
+            String actionBar = ChatColor.translateAlternateColorCodes('&', Lang.ACTIONBAR_TXT
+                    .replace("{action}", action)
+                    .replace("{time}", time)
+                    .replace("{reason}", reason));
             for (Player online : plugin.getServer().getOnlinePlayers()) {
-                ComponentSender.sendMessage(online, ChatMessageType.ACTION_BAR, actionbar);
+                online.sendActionBar(actionBar);
             }
         }
 

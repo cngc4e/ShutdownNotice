@@ -1,12 +1,10 @@
 package net.pl3x.bukkit.shutdownnotice.configuration;
 
 import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 
@@ -84,16 +82,6 @@ public class Lang {
 
         for (String part : message.split("\n")) {
             recipient.sendMessage(part);
-        }
-    }
-
-    public static void broadcast(String message) {
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            send(player, message);
-        }
-        send(Bukkit.getConsoleSender(), message);
-        if (ShutdownNotice.getPlugin().getBotHook() != null) {
-            ShutdownNotice.getPlugin().getBotHook().sendToDiscord("*" + message.trim() + "*");
         }
     }
 }

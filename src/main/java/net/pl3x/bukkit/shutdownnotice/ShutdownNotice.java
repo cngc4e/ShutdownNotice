@@ -3,7 +3,6 @@ package net.pl3x.bukkit.shutdownnotice;
 import net.pl3x.bukkit.shutdownnotice.command.CmdShutdown;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
-import net.pl3x.bukkit.shutdownnotice.hook.Pl3xBotHook;
 import net.pl3x.bukkit.shutdownnotice.listener.CommandListener;
 import net.pl3x.bukkit.shutdownnotice.listener.PingListener;
 import net.pl3x.bukkit.shutdownnotice.task.Countdown;
@@ -14,7 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 
 public class ShutdownNotice extends JavaPlugin {
-    private Pl3xBotHook botHook;
     private InternalClock internalClock;
     private Countdown countdown;
 
@@ -22,11 +20,6 @@ public class ShutdownNotice extends JavaPlugin {
     public void onEnable() {
         Config.reload();
         Lang.reload();
-
-        if (Bukkit.getPluginManager().isPluginEnabled("Pl3xBot")) {
-            Logger.info("Found Pl3xBot. Initiating hook.");
-            botHook = new Pl3xBotHook();
-        }
 
         if (new File(getDataFolder(), "restart").delete()) {
             Logger.info("Cleaning up after restart.");
@@ -49,10 +42,6 @@ public class ShutdownNotice extends JavaPlugin {
 
     public static ShutdownNotice getPlugin() {
         return ShutdownNotice.getPlugin(ShutdownNotice.class);
-    }
-
-    public Pl3xBotHook getBotHook() {
-        return botHook;
     }
 
     public InternalClock getInternalClock() {
