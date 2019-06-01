@@ -1,30 +1,26 @@
-# Enable debug info in console
-debug-mode: false
-
-# Enable colors in console output
-color-logs: true
+language-file: "lang-en.yml"
 
 # Update the server list ping MOTD to show when server is scheduled for shutdown/restart
 update-ping-motd: true
 
 # Commands to perform just before the server shuts down
 shutdown-commands:
-- say Goodbye.
+  - say Goodbye.
 
 # When should the countdown message be displayed to the user?
 # This setting only effects the title, subtitle, and chat.
 # Warning: For advanced users only!
 display-intervals:
-- timeLeft <= 900 && timeLeft % 300 == 0 # every 5 minutes starting at 15 minutes til
-- timeLeft <= 300 && timeLeft % 60 == 0 # every minute starting at 5 minutes til
-- timeLeft == 30 # 30 seconds til
-- timeLeft <= 10 # every second starting at 10 seconds til
+  - timeLeft <= 900 && timeLeft % 300 == 0 # every 5 minutes starting at 15 minutes til
+  - timeLeft <= 300 && timeLeft % 60 == 0 # every minute starting at 5 minutes til
+  - timeLeft == 30 # 30 seconds til
+  - timeLeft <= 10 # every second starting at 10 seconds til
 
-# Start showing the actionbar downdown every second (seconds until shutdown)
+# Start showing the actionbar countdown every second (seconds until shutdown)
 display-actionbar: 900
 
 # Automatic restart time
 auto-restart:
-  time: "23:00"
+  time: "22:00"
   reason: "Nightly Reboot"
   countdown: 900

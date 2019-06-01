@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.pl3x.bukkit.shutdownnotice</groupId>
     <artifactId>ShutdownNotice</artifactId>
-    <version>1.12</version>
+    <version>1.14</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -12,13 +12,13 @@
         <dependency>
             <groupId>com.destroystokyo.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.11.2-R0.1-SNAPSHOT</version>
+            <version>1.14.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>github.scarsz.discordsrv</groupId>
-            <artifactId>DiscordSRV</artifactId>
-            <version>14.0</version>
+            <groupId>net.pl3x.bukkit.discord4bukkit</groupId>
+            <artifactId>Discord4Bukkit</artifactId>
+            <version>1.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -28,8 +28,8 @@
             <url>https://repo.destroystokyo.com/repository/maven-public/</url>
         </repository>
         <repository>
-            <id>Scarsz-Jenkins</id>
-            <url>http://ci.scarsz.me/plugin/repository/everything/</url>
+            <id>pl3x-repo</id>
+            <url>http://repo.pl3x.net/</url>
         </repository>
     </repositories>
     <build>

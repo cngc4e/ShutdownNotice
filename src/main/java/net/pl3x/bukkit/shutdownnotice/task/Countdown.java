@@ -84,8 +84,8 @@ public class Countdown extends BukkitRunnable {
                     .replace("{time}", time)
                     .replace("{reason}", reason)));
 
-            if (plugin.getDiscordSRVHook() != null) {
-                plugin.getDiscordSRVHook().sendToDiscord(Lang.DISCORD_TXT
+            if (plugin.getDiscordHook() != null) {
+                plugin.getDiscordHook().sendToDiscord(Lang.DISCORD_TXT
                         .replace("{action}", action)
                         .replace("{time}", time)
                         .replace("{reason}", reason));

@@ -1,21 +1,22 @@
-name: ${project.artifactId}
-main: ${project.groupId}.${project.artifactId}
-version: ${project.version}
-author: BillyGalbreath
-description: ${project.artifactId} Bukkit Plugin
+name: "${project.artifactId}"
+main: "${project.groupId}.${project.artifactId}"
+version: "${project.version}"
+author: "BillyGalbreath"
+description: "${project.artifactId} Bukkit Plugin"
+api-version: "1.13"
 softdepend:
-- DiscordSRV
+  - Discord4Bukkit
 
 commands:
   shutdown:
     description: Shuts the server down (or optionally restarts it)
     usage: /<command> [time (reason) | cancel]
     aliases:
-    - restart
-    - reboot
-    - sd
-    - rs
-    - rb
+      - restart
+      - reboot
+      - sd
+      - rs
+      - rb
 
 permissions:
   command.shutdown:

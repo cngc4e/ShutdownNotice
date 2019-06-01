@@ -1,6 +1,5 @@
 package net.pl3x.bukkit.shutdownnotice.configuration;
 
-import net.pl3x.bukkit.shutdownnotice.Logger;
 import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -13,8 +12,6 @@ import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class Config {
-    public static boolean COLOR_LOGS = true;
-    public static boolean DEBUG_MODE = false;
     public static String LANGUAGE_FILE = "lang-en.yml";
     public static boolean UPDATE_PING_MOTD = true;
     public static List<String> SHUTDOWN_COMMANDS;
@@ -30,8 +27,6 @@ public class Config {
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
 
-        COLOR_LOGS = config.getBoolean("color-logs", true);
-        DEBUG_MODE = config.getBoolean("debug-mode", false);
         LANGUAGE_FILE = config.getString("language-file", "lang-en.yml");
         UPDATE_PING_MOTD = config.getBoolean("update-ping-list", true);
         SHUTDOWN_COMMANDS = config.getStringList("shutdown-commands");
@@ -44,7 +39,6 @@ public class Config {
                 AUTO_RESTART_TIME = AUTO_RESTART_TIME.plus(24, HOURS);
             }
         } catch (Exception e) {
-            Logger.warn("No auto-restart time specified. Will not schedule an auto restart.");
             e.printStackTrace();
         }
         AUTO_RESTART_REASON = config.getString("auto-restart.reason", "Nightly Reboot");

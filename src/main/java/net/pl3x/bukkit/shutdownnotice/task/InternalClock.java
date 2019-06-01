@@ -1,6 +1,5 @@
 package net.pl3x.bukkit.shutdownnotice.task;
 
-import net.pl3x.bukkit.shutdownnotice.Logger;
 import net.pl3x.bukkit.shutdownnotice.ShutdownNotice;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -28,7 +27,6 @@ public class InternalClock extends BukkitRunnable {
         }
 
         long timeLeft = timeNow.until(restartTime, SECONDS);
-        Logger.debug("TimeLeft: " + timeLeft);
         if (timeLeft > Config.AUTO_RESTART_COUNTDOWN) {
             return; // not ready for countdown
         }

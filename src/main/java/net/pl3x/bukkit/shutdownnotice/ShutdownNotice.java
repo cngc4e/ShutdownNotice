@@ -3,7 +3,7 @@ package net.pl3x.bukkit.shutdownnotice;
 import net.pl3x.bukkit.shutdownnotice.command.CmdShutdown;
 import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
-import net.pl3x.bukkit.shutdownnotice.hook.DiscordSRVHook;
+import net.pl3x.bukkit.shutdownnotice.hook.DiscordHook;
 import net.pl3x.bukkit.shutdownnotice.listener.CommandListener;
 import net.pl3x.bukkit.shutdownnotice.listener.PingListener;
 import net.pl3x.bukkit.shutdownnotice.task.Countdown;
@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 
 public class ShutdownNotice extends JavaPlugin {
-    private DiscordSRVHook discordSRVHook;
+    private DiscordHook discordHook;
     private InternalClock internalClock;
     private Countdown countdown;
 
@@ -23,12 +23,10 @@ public class ShutdownNotice extends JavaPlugin {
         Config.reload();
         Lang.reload();
 
-        if (new File(getDataFolder(), "restart").delete()) {
-            Logger.info("Cleaning up after restart.");
-        }
+        new File(getDataFolder(), "restart").delete();
 
-        if (getServer().getPluginManager().isPluginEnabled("DiscordSRV")) {
-            discordSRVHook = new DiscordSRVHook();
+        if (getServer().getPluginManager().isPluginEnabled("Discord4Bukkit")) {
+            discordHook = new DiscordHook();
         }
 
         internalClock = new InternalClock(this);
@@ -37,13 +35,6 @@ public class ShutdownNotice extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PingListener(this), this);
 
         getCommand("shutdown").setExecutor(new CmdShutdown(this));
-
-        Logger.info(getName() + " v" + getDescription().getVersion() + " enabled!");
-    }
-
-    @Override
-    public void onDisable() {
-        Logger.info(getName() + " Disabled.");
     }
 
     public static ShutdownNotice getPlugin() {
@@ -62,7 +53,7 @@ public class ShutdownNotice extends JavaPlugin {
         this.countdown = countdown;
     }
 
-    public DiscordSRVHook getDiscordSRVHook() {
-        return discordSRVHook;
+    public DiscordHook getDiscordHook() {
+        return discordHook;
     }
 }
