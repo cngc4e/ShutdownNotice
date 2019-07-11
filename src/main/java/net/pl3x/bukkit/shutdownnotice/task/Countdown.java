@@ -5,6 +5,10 @@ import net.pl3x.bukkit.shutdownnotice.configuration.Config;
 import net.pl3x.bukkit.shutdownnotice.configuration.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -15,8 +19,10 @@ import java.util.List;
 
 public class Countdown extends BukkitRunnable {
     private final ShutdownNotice plugin;
+    private final BossBar bossbar;
     private final String reason;
     private final boolean restart;
+    private final long totalTime;
     private long timeLeft;
     private boolean firstRun;
 
@@ -24,8 +30,19 @@ public class Countdown extends BukkitRunnable {
         this.plugin = plugin;
         this.reason = reason == null || reason.isEmpty() ? "" : ChatColor.translateAlternateColorCodes('&', reason);
         this.restart = restart;
+        this.totalTime = timeLeft;
         this.timeLeft = timeLeft;
         this.firstRun = true;
+
+        NamespacedKey key = getKey();
+        BossBar bossbar = plugin.getServer().getBossBar(key);
+        if (bossbar == null) {
+            bossbar = plugin.getServer().createBossBar(key, (restart ? "Restart" : "Shutdown") + " Task", BarColor.RED, BarStyle.SOLID);
+        }
+        bossbar.setVisible(true);
+        bossbar.setProgress(1.0D);
+
+        this.bossbar = bossbar;
     }
 
     public String getReason() {
@@ -97,8 +114,19 @@ public class Countdown extends BukkitRunnable {
                     .replace("{action}", action)
                     .replace("{time}", time)
                     .replace("{reason}", reason));
+            bossbar.setTitle(actionBar);
+            double progress = (double) timeLeft / totalTime;
+            if (progress < 0.0D) {
+                progress = 0.0D;
+            } else if (progress > 1.0D) {
+                progress = 1.0D;
+            }
+            bossbar.setProgress(progress);
+
+            System.out.println(timeLeft + "/" + totalTime + "=" + progress);
+
             for (Player online : plugin.getServer().getOnlinePlayers()) {
-                online.sendActionBar(actionBar);
+                bossbar.addPlayer(online);
             }
         }
 
@@ -113,7 +141,13 @@ public class Countdown extends BukkitRunnable {
     @Override
     public void cancel() {
         super.cancel();
-
+        bossbar.setVisible(false);
+        bossbar.removeAll();
+        plugin.getServer().removeBossBar(getKey());
         plugin.setCountdown(null);
+    }
+
+    private NamespacedKey getKey() {
+        return new NamespacedKey(plugin, "countdown");
     }
 }
