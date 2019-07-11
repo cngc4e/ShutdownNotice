@@ -122,9 +122,6 @@ public class Countdown extends BukkitRunnable {
                 progress = 1.0D;
             }
             bossbar.setProgress(progress);
-
-            System.out.println(timeLeft + "/" + totalTime + "=" + progress);
-
             for (Player online : plugin.getServer().getOnlinePlayers()) {
                 bossbar.addPlayer(online);
             }
