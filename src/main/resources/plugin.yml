@@ -10,6 +10,7 @@ softdepend:
 commands:
   shutdown:
     description: Shuts the server down (or optionally restarts it)
+    permission: command.shutdown
     usage: /<command> [time (reason) | cancel]
     aliases:
       - restart
