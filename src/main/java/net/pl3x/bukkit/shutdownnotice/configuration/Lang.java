@@ -31,7 +31,6 @@ public class Lang {
     public static String TITLE_TXT;
     public static String SUBTITLE_TXT;
     public static String CHAT_TXT;
-    public static String DISCORD_TXT;
 
     public static String VERSION;
     public static String RELOAD;
@@ -67,7 +66,6 @@ public class Lang {
         TITLE_TXT = config.getString("title-txt", "{time}");
         SUBTITLE_TXT = config.getString("subtitle-txt", "&4&l{action}");
         CHAT_TXT = config.getString("chat-txt", "&4&l{action} in {time} &4&lfor &e{reason}");
-        DISCORD_TXT = config.getString("discord-txt", ":warning: **{action}** in **{time}** for {reason}");
 
         VERSION = config.getString("version", "&d{plugin} v{version}");
         RELOAD = config.getString("reload", "&d{plugin} v{version} reloaded.");

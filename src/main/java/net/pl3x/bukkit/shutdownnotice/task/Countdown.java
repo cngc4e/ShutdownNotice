@@ -100,13 +100,6 @@ public class Countdown extends BukkitRunnable {
                     .replace("{action}", action)
                     .replace("{time}", time)
                     .replace("{reason}", reason)));
-
-            if (plugin.getDiscordHook() != null) {
-                plugin.getDiscordHook().sendToDiscord(Lang.DISCORD_TXT
-                        .replace("{action}", action)
-                        .replace("{time}", time)
-                        .replace("{reason}", reason));
-            }
         }
 
         if (timeLeft <= Config.DISPLAY_ACTIONBAR) {
