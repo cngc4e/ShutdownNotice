@@ -32,7 +32,7 @@ public class Config {
         UPDATE_PING_MOTD = config.getBoolean("update-ping-list", true);
         SHUTDOWN_COMMANDS = config.getStringList("shutdown-commands");
         DISPLAY_INTERVALS = config.getStringList("display-intervals");
-        DISPLAY_ACTIONBAR = config.getInt("display-actionbar", 900);
+        DISPLAY_ACTIONBAR = config.getInt("display-actionbar", -1);
 
         AUTO_RESTART_ENABLED = config.getBoolean("auto-restart.enabled", false);
         try {

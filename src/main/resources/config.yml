@@ -16,8 +16,9 @@ display-intervals:
   - timeLeft == 30 # 30 seconds til
   - timeLeft <= 10 # every second starting at 10 seconds til
 
-# Start showing the actionbar countdown every second (seconds until shutdown)
-display-actionbar: 900
+# How many seconds until shutdown should we start showing the actionbar countdown (every second)?
+# Set -1 to never show.
+display-actionbar: -1
 
 # Automatic restart time
 auto-restart:
