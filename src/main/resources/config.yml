@@ -21,6 +21,7 @@ display-actionbar: 900
 
 # Automatic restart time
 auto-restart:
+  enabled: false
   time: "22:00"
   reason: "Nightly Reboot"
   countdown: 900

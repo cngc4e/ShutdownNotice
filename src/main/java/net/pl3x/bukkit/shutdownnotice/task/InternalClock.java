@@ -21,6 +21,10 @@ public class InternalClock extends BukkitRunnable {
     public void run() {
         this.timeNow = LocalDateTime.now();
 
+        if (!Config.AUTO_RESTART_ENABLED) {
+            return; // auto restart disabled
+        }
+
         LocalDateTime restartTime = Config.AUTO_RESTART_TIME;
         if (restartTime == null) {
             return; // no configured restart time
