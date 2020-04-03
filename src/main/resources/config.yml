@@ -20,6 +20,9 @@ display-intervals:
 # Set -1 to never show.
 display-actionbar: -1
 
+# Should titles be broadcasted alongside the chat messages?
+display-title: true
+
 # Automatic restart time
 auto-restart:
   enabled: false

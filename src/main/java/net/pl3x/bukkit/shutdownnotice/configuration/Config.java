@@ -17,6 +17,7 @@ public class Config {
     public static List<String> SHUTDOWN_COMMANDS;
     public static List<String> DISPLAY_INTERVALS;
     public static int DISPLAY_ACTIONBAR;
+    public static boolean DISPLAY_TITLE;
     public static boolean AUTO_RESTART_ENABLED;
     public static LocalDateTime AUTO_RESTART_TIME;
     public static String AUTO_RESTART_REASON;
@@ -33,6 +34,7 @@ public class Config {
         SHUTDOWN_COMMANDS = config.getStringList("shutdown-commands");
         DISPLAY_INTERVALS = config.getStringList("display-intervals");
         DISPLAY_ACTIONBAR = config.getInt("display-actionbar", -1);
+        DISPLAY_TITLE = config.getBoolean("display-title", true);
 
         AUTO_RESTART_ENABLED = config.getBoolean("auto-restart.enabled", false);
         try {

@@ -84,16 +84,18 @@ public class Countdown extends BukkitRunnable {
                 .replace("{seconds}", String.format("%02d", timeLeft % 60));
 
         if (broadcast) {
-            String title = ChatColor.translateAlternateColorCodes('&', Lang.TITLE_TXT
-                    .replace("{action}", action)
-                    .replace("{time}", time)
-                    .replace("{reason}", reason));
-            String subTitle = ChatColor.translateAlternateColorCodes('&', Lang.SUBTITLE_TXT
-                    .replace("{action}", action)
-                    .replace("{time}", time)
-                    .replace("{reason}", reason));
-            for (Player online : Bukkit.getOnlinePlayers()) {
-                online.sendTitle(title, subTitle);
+            if (Config.DISPLAY_TITLE) {
+                String title = ChatColor.translateAlternateColorCodes('&', Lang.TITLE_TXT
+                        .replace("{action}", action)
+                        .replace("{time}", time)
+                        .replace("{reason}", reason));
+                String subTitle = ChatColor.translateAlternateColorCodes('&', Lang.SUBTITLE_TXT
+                        .replace("{action}", action)
+                        .replace("{time}", time)
+                        .replace("{reason}", reason));
+                for (Player online : Bukkit.getOnlinePlayers()) {
+                    online.sendTitle(title, subTitle);
+                }
             }
 
             Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Lang.CHAT_TXT
