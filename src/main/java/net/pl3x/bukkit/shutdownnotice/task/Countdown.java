@@ -64,7 +64,7 @@ public class Countdown extends BukkitRunnable {
         List<String> displayIntervals = Config.DISPLAY_INTERVALS;
         if (displayIntervals != null && !displayIntervals.isEmpty()) {
             ScriptEngineManager factory = new ScriptEngineManager();
-            ScriptEngine engine = factory.getEngineByName("rhino");
+            ScriptEngine engine = factory.getEngineByName("JavaScript");
             for (String condition : displayIntervals) {
                 try {
                     engine.eval("timeLeft = " + timeLeft);
